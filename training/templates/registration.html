@@ -1,0 +1,25 @@
+{% extends "base_page.html" %}
+
+{% block page_nav %}
+    {{ block.super }}
+{% endblock %}
+
+{% block menu %}
+    <h3>{{info.error}}</h3>
+    <form method = 'post'>
+        {% csrf_token %}
+        <label for='email'>Введите email:</label>
+        <input type='text' id='email' name='email' maxlength='30' required>
+
+        <p><label for='password'>Введите пароль:</label>
+        <input type='password' id='password' name='password' minlength='8' required></p>
+
+        <p><label for='repeat_password'>Повторите пароль:</label>
+        <input type='password' id='repeat_password' name='repeat_password' minlength='8' required></p>
+
+        <p><button type='submit'>Отправить</button></p>
+    </form>
+{% endblock menu %}
+
+{% block content %}
+{% endblock content %}

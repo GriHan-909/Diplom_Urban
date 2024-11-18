@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+    <title>Document</title>
+</head>
+<body>
+    <header>
+        {% block page_nav %}
+        <nav class="menu">
+            <div class="left-menu">
+                <a href='http://127.0.0.1:5000/' class="menu-item">Главная</a>
+                <a href='http://127.0.0.1:5000/calculation/' class="menu-item">Расчет</a>
+            </div>
+        </nav>
+        {% endblock %}
+    </header>
+
+    <main>
+        {% block main %}
+        <h1>Расчет количество ккал для поддержания отличный фигуры</h1>
+        {% endblock %}
+    </main>
+
+    <section>
+        {% block section %}
+        <h2>Введите свои данные:</h2>
+        <br>
+        <form method="post">
+            <label for="name">Имя:</label>
+            <input type="text" id="name" name="name" required>
+            <label for="age">Возраст:</label>
+            <input type="number" id="age" name="age" required>
+            <label for="height">Рост, см:</label>
+            <input type="number" id="height" name="height" required>
+            <label for="weight">Вес, кг:</label>
+            <input type="number" id="weight" name="weight" required><br>
+            <input type="radio" id="gender_m" name="gender" value="Мужской">
+            <label for="gender_m">Мужской</label>
+            <input type="radio" id="gender_w" name="gender" value="Женский">
+            <label for="gender_w">Женский</label>
+            <br><br>
+            <button type="submit">Отправить</button>
+        </form>
+        {% if info %}
+        <h2>{{ info }}!</h2>
+        {% endif %}
+        {% if name %}
+           <h2>Привет, {{ name }}!</h2>
+           <b><h2>Теперь перейди в раздел <a href='http://127.0.0.1:5000/calculation/' class="menu-item">"Расчет"</a></h2></b>
+        {% endif %}
+        {% endblock %}
+    </section>
+</body>
+</html>

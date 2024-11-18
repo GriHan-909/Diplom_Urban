@@ -1,0 +1,38 @@
+{% extends "base_page.html" %}
+
+{% block page_nav %}
+    {{ block.super }}
+{% endblock %}
+
+{% block menu %}
+<h1>Личный кабинет</h1>
+
+<form method = 'POST'>
+    {% csrf_token %}
+    <div class="form-group">
+        <label for="name">Имя:</label>
+        <input type="text" id="name" name='name' value={{user_profile.name}}>
+    </div>
+    <div class="form-group">
+        <label for="last_name">Фамилия:</label>
+        <input type="text" id="last_name" name='last_name' value={{user_profile.last_name}}>
+    </div>
+    <div class="form-group">
+        <label for="age">Возраст:</label>
+        <input type="number" id="age" name='age' value={{user_profile.age}}>
+    </div>
+    <div class="form-group">
+        <label for="email">Email:</label>
+        <input type="email" id="email" name='email' value={{user_profile.email}}>
+    </div>
+
+    <button type='submit'>Сохранить</button>
+    <h4>{{success}}</h4>
+</form>
+{% endblock menu %}
+
+{% block content %}
+{% endblock content %}
+
+
+

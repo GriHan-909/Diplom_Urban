@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+    <title>Document</title>
+</head>
+<body>
+    <header>
+        {% block page_nav %}
+        <nav class="menu">
+            <div class="left-menu">
+                <a href='http://127.0.0.1:5000/' class="menu-item">Главная</a>
+                <a href='http://127.0.0.1:5000/calculation/' class="menu-item">Расчет</a>
+            </div>
+        </nav>
+        {% endblock %}
+    </header>
+
+    <main>
+        {% block main %}
+            <h2>Формула Харриса-Бенедикта</h2><br>
+            <h3> Для женщин: 655 + (9,6 х вес в кг) + (1,8 х рост в см) – (4,7 х возраст в годах)</h3>
+            <h3> Для мужчин: 66,5 + (13,7 х вес в кг) + (5 х рост в см) – (6,8 х возраст в годах)</h3><br><br>
+        {% endblock %}
+    </main>
+
+    <section>
+        {% block section %}
+        <h2> Итоговый расчет:</h2>
+            <div>
+                {% if  value%}
+                <h2>Ваша норма ккал: {{value}} ккал</h2>
+                {% else %}
+                <h2>Ваша норма ккал: {{value}} ккал</h2>
+                <h2>Для расчета заполните форму на странице <a href='http://127.0.0.1:5000/' class="menu-item">Главная</a></h2>
+                {% endif %}
+            </div>
+        {% endblock %}
+    </section>
+</body>
+</html>

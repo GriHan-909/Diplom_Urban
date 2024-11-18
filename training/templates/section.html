@@ -1,0 +1,36 @@
+{% extends "base_page.html" %}
+
+{% block page_nav %}
+  {{ block.super }}
+{% endblock %}
+
+{% block menu %}
+    <title>Секция</title>
+    <style>
+        body {
+            text-align: center;
+        }
+    </style>
+    <h1>Вы выбрали секцию: {{ name }}</h1>
+    <b>
+        <h3>Выбери дату и время тренировки</h3>
+    </b>
+    <br>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.date_time }}
+            <br><br>
+            <button type="submit">Отправить</button>
+        </form>
+    <h4>
+    {% if selected_date_time %}
+        <p>Выбранная дата и время тренировки: {{ selected_date_time }}</p>
+    {% endif %}
+    </h4>
+    <br>
+{% endblock menu %}
+
+
+{% block content %}
+    <a href="{% url 'schedule' %}">Назад</a>
+{% endblock content %}

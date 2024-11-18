@@ -1,0 +1,36 @@
+{% extends "base_page.html" %}
+
+{% block page_nav %}
+  {{ block.super }}
+{% endblock %}
+
+{% block menu %}
+  <h2>{{title}}</h2>
+{% endblock menu %}
+
+{% block content %}
+    <ul>
+        {%for section in page_obj%}
+        <li><h3> {{section}} </h3>
+        <form action="{% url 'section' section %}" method="get">
+            <button type="submit">Перейти</button>
+        </form>
+        </li>
+        {% endfor %}
+    </ul>
+    <div class="pagination">
+        <span class="step-links">
+            {% if page_obj.has_previous %}
+                <a href="?page=1">&laquo; Первая</a>
+                <a href="?page={{ page_obj.previous_page_number }}">Предыдущая</a>
+            {% endif %}
+            <span class="current">
+                Страница {{ page_obj.number }} из {{ page_obj.paginator.num_pages }}.
+            </span>
+            {% if page_obj.has_next %}
+                <a href="?page={{ page_obj.next_page_number }}">Следующая</a>
+                <a href="?page={{ page_obj.paginator.num_pages }}">Последняя &raquo;</a>
+            {% endif %}
+        </span>
+    </div>
+{% endblock content %}

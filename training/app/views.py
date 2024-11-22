@@ -3,11 +3,8 @@ from django.shortcuts import render, redirect
 from .forms import UserRegister, UserLogin, UserProfileForm, DateTimeForm
 from .models import User, UserProfile, DateTimeTrain
 
-user_inner = {}
-
 
 def log_in(request):
-    global user_inner
     emails = tuple(item.email for item in User.objects.all())
     if request.method == 'POST':
         form = UserLogin(request.POST)
@@ -19,8 +16,8 @@ def log_in(request):
             if email in emails:
                 user = User.objects.get(email=email)
                 if password == user.password and email == user.email:
-                    user_inner['email'] = email
-                    user_inner['used'] = True
+                    request.session['email'] = email
+                    request.session['used'] = True
                     return redirect('base_page/')
                 elif password != user.password:
                     info['error'] = 'Пароль не верный'
@@ -62,8 +59,8 @@ def sign_up_by_django(request):
 
 
 def profile_view(request):
-    if user_inner and user_inner['used']:
-        user_profile = UserProfile.objects.get(email=user_inner['email'])
+    if request.session.get('used'):
+        user_profile = UserProfile.objects.get(email=request.session['email'])
         if request.method == 'POST':
             form = UserProfileForm(request.POST)
             if form.is_valid():
@@ -87,7 +84,7 @@ def profile_view(request):
 
 
 def schedule_list(request):
-    if user_inner and user_inner['used']:
+    if request.session.get('used'):
         title = 'Выберите секцию'
         sports_sections = ['Баскетбол', 'Бодибилдинг', 'Бокс', 'Волейбол', 'Гимнастика', 'Каратэ',
                            'Плавание', 'Регби', 'Сальса', 'Спортивное ориентирование', 'Теннис', 'Фитнес',
@@ -106,7 +103,7 @@ def schedule_list(request):
 
 
 def section(request, name):
-    user = UserProfile.objects.get(email=user_inner['email'])
+    user = UserProfile.objects.get(email=request.session['email'])
     DateTimeTrain.objects.filter(id=user.id).update(training_sessions=name)
     form = DateTimeForm(request.POST)
     if request.method == 'POST':
